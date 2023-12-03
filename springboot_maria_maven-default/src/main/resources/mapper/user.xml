@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.project.login.mapper.LoginMapper">
+
+  <select id="getAllDataList" resultType="com.spring.project.login.vo.UserVo">
+    SELECT ID AS USERID, PASSWORD AS USERPW ,NAME, USERAUTH FROM MEMBER
+  </select>
+  
+  <select id="getUserInfo" resultType="com.spring.project.login.vo.UserVo">
+    SELECT ID AS USERID, PASSWORD AS USERPW ,NAME ,USERAUTH FROM MEMBER WHERE ID = #{userId}
+  </select>
+  
+  
+
+  <select id="findByAccount" resultType="com.spring.project.login.vo.UserVo">
+    SELECT ID AS USERID, PASSWORD AS USERPW ,NAME ,USERAUTH FROM MEMBER WHERE ID = #{userId}
+  </select>
+
+
+  <select id="saveUser" parameterType="com.spring.project.login.vo.UserVo">
+    INSERT INTO MEMBER VALUES(#{userId},#{userPw},#{name},'USER')
+  </select>
+
+</mapper> 

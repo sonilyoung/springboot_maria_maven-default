@@ -1,7 +1,5 @@
 package com.spring.project.login;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,39 +10,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.project.auth.PrincipalDetailsService;
+import com.spring.project.login.service.LoginService;
 import com.spring.project.login.vo.UserVo;
 
 @Controller
 public class LoginController {
 	
-	
 	@Autowired
-	private PrincipalDetailsService testService;
+	private LoginService loginService;
 	
-	@RequestMapping(value = "/", method=RequestMethod.GET)
-	public ModelAndView goLogin(HttpServletRequest request
-			,UserVo testVo
-			,@RequestParam(value = "error", required = false) String error
-			,@RequestParam(value = "exception", required = false) String exception
-			,Model model
-			) {
+	@RequestMapping(value = {"/", "/main"}, method=RequestMethod.GET)
+	public ModelAndView main(HttpServletRequest request, UserVo userVo) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("loginPage");
-        model.addAttribute("error",error);
-        model.addAttribute("exception",exception);		
-		return mav;
-	}	
-	
-	@RequestMapping(value = "/main", method=RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest request, UserVo testVo) {
-		ModelAndView mav = new ModelAndView();
-		
-		List<UserVo> resultList= testService.getAllDataList(testVo);
-		
-		mav.addObject("resultList",resultList);
-		mav.setViewName("index");
-		
+		//List<UserVo> resultList= testService.getAllDataList(userVo);
+		//mav.addObject("resultList",resultList);
+		mav.setViewName("main");
 		return mav;
 	}
 	
@@ -53,9 +33,9 @@ public class LoginController {
 	 * @return
 	 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(TestVo testVo) {
+	public ModelAndView login(userVo userVo) {
 		
- 		JwtToken token = testService.procLogin(testVo.getId(), testVo.getPassword());
+ 		JwtToken token = testService.procLogin(userVo.getId(), userVo.getPassword());
  		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("token",token.getAccessToken());
@@ -65,24 +45,28 @@ public class LoginController {
 	}*/
 	
 	@RequestMapping(value = "/loginPage", method=RequestMethod.GET)
-	public ModelAndView loginPage(HttpServletRequest request, UserVo testVo) {
+	public ModelAndView loginPage(HttpServletRequest request, UserVo userVo
+			,@RequestParam(value = "error", required = false) String error
+			,@RequestParam(value = "exception", required = false) String exception
+			,Model model
+			) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("loginPage");
+        model.addAttribute("error",error);
+        model.addAttribute("exception",exception);			
 		return mav;
 	}		
 	
-	@RequestMapping(value = "/signUp", method=RequestMethod.GET)
-	public ModelAndView signUp(HttpServletRequest request, UserVo testVo) {
+	@RequestMapping(value = "/joinPage", method=RequestMethod.GET)
+	public ModelAndView joinPage(HttpServletRequest request, UserVo userVo) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("join");
+		mav.setViewName("joinPage");
 		return mav;
 	}	
 	
-	@RequestMapping(value = "/join", method=RequestMethod.POST)
-	public ModelAndView join(HttpServletRequest request, UserVo testVo) {
-		ModelAndView mav = new ModelAndView();
-		testService.joinUser(testVo);
-		mav.setViewName("index");
-		return mav;
+	@RequestMapping(value = "/joinProc", method=RequestMethod.POST)
+	public String joinProc(HttpServletRequest request, UserVo userVo) {
+		loginService.insertUser(userVo);
+		return "redirect:/main";
 	}	
 }

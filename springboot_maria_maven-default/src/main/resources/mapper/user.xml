@@ -5,23 +5,28 @@
 
 <mapper namespace="com.spring.project.login.mapper.LoginMapper">
 
-  <select id="getAllDataList" resultType="com.spring.project.login.vo.UserVo">
-    SELECT ID AS USERID, PASSWORD AS USERPW ,NAME, USERAUTH FROM MEMBER
-  </select>
-  
-  <select id="getUserInfo" resultType="com.spring.project.login.vo.UserVo">
-    SELECT ID AS USERID, PASSWORD AS USERPW ,NAME ,USERAUTH FROM MEMBER WHERE ID = #{userId}
-  </select>
-  
-  
+	<select id="selectAllDataList"
+		resultType="com.spring.project.login.vo.UserVo">
+		SELECT USER_ID, PASSWORD ,USER_NM, USER_AUTH, EMAIL FROM MEMBER
+	</select>
 
-  <select id="findByAccount" resultType="com.spring.project.login.vo.UserVo">
-    SELECT ID AS USERID, PASSWORD AS USERPW ,NAME ,USERAUTH FROM MEMBER WHERE ID = #{userId}
-  </select>
+	<select id="selectUserInfo"
+		resultType="com.spring.project.login.vo.UserVo">
+		SELECT USER_ID, PASSWORD ,USER_NM ,USER_AUTH, EMAIL FROM MEMBER WHERE
+		USER_ID = #{userId}
+	</select>
 
+	<select id="findByAccount"
+		resultType="com.spring.project.login.vo.UserVo">
+		SELECT USER_ID, PASSWORD ,USER_NM ,USER_AUTH, EMAIL FROM MEMBER WHERE
+		USER_ID = #{userId}
+	</select>
 
-  <select id="saveUser" parameterType="com.spring.project.login.vo.UserVo">
-    INSERT INTO MEMBER VALUES(#{userId},#{userPw},#{name},'USER')
-  </select>
+	<select id="insertUser"
+		parameterType="com.spring.project.login.vo.UserVo">
+		INSERT INTO MEMBER
+		(USER_ID, PASSWORD, USER_NM, USER_AUTH, EMAIL)
+		VALUES(#{userId}, #{password}, #{userNm}, #{userAuth}, #{email})
+	</select>
 
 </mapper> 

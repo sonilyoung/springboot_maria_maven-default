@@ -26,7 +26,7 @@ public interface LoginMapper {
 	 * @param 
 	 * @return
 	 */
-	UserVo getUserInfo(String userId);	
+	UserVo selectUserInfo(String userId);	
 
 	
 	/**
@@ -41,7 +41,7 @@ public interface LoginMapper {
 	 * @param 
 	 * @return
 	 */	
-	void saveUser(UserVo testVo);
+	void insertUser(UserVo testVo);
 	
 
 }

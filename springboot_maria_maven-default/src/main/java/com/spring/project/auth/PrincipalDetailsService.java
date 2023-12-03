@@ -34,34 +34,6 @@ public class PrincipalDetailsService implements UserDetailsService {
 	Date time = new Date();
 	String localTime = format.format(time);
 
-	/**
-	 * 회원정보 조회(중개회원 및 중개업소)
-	 * 
-	 * @param userId
-	 * @return
-	 */
-
-	public UserVo getUserInfo(String userId) {
-		return testMapper.getUserInfo(userId);
-	}
-
-	/**
-	 * 
-	 * @param
-	 * @return
-	 */
-	public List<UserVo> getAllDataList(UserVo testVo) {
-		return testMapper.getAllDataList(testVo);
-	}
-
-	@Transactional
-	public void joinUser(UserVo UserVo) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		UserVo.setUserPw(passwordEncoder.encode(UserVo.getUserPw()));
-		UserVo.setUserAuth("USER");
-		testMapper.saveUser(UserVo);
-
-	}
 
 	// .usernameParameter("userId")
 

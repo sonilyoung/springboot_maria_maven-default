@@ -77,12 +77,12 @@ public class PrincipalDetails implements UserDetails {//UserDetails는 시큐리
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return user.getUserPw();
+		return user.getPassword();
 	}
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return user.getName();
+		return user.getUserNm();
 	}
 	@Override
 	public boolean isAccountNonExpired() {
